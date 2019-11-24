@@ -22,16 +22,16 @@ inThisBuild(
 ThisBuild / publishTo := sonatypePublishToBundle.value
 ThisBuild / publishMavenStyle := true
 
-lazy val sonatypeBundleReleaseIfNotSnapshot =
-  taskKey[String]("Release a bundle to Sonatype (if not SNAPSHOT)")
-
-ThisBuild / sonatypeBundleReleaseIfNotSnapshot := Def.taskDyn {
-  if (isSnapshot.value) {
-    Def.task { "SNAPSHOT" }
+lazy val sonatypeBundleReleaseIfNotSnapshot: Command = Command.command("sonatypeBundleReleaseIfNotSnapshot") { state =>
+  val extracted = Project.extract(state)
+  if (extracted.get(isSnapshot)) {
+    val log = extracted.get(sLog)
+    log.info("Snapshot version, doing nothing")
+    state
   } else {
-    Def.task { (sonatypeBundleRelease in publish).value }
+    Command.process("sonatypeBundleRelease", state)
   }
-}.value
+}
 
 inThisBuild(
   Seq(
@@ -52,6 +52,7 @@ lazy val zilog = (project in file("."))
     name := "zilog",
     sonatypeProfileName := "com.github.mvv",
     sonatypeSessionName := s"Zilog_${version.value}",
+    commands += sonatypeBundleReleaseIfNotSnapshot,
     scalacOptions ++= {
       if (isPriorTo2_13(scalaVersion.value)) {
         Nil
