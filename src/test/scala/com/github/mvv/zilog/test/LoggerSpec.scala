@@ -18,7 +18,8 @@ class LoggerSpec extends Specification with DefaultRuntime {
       logger.entries must containTheSameElementsAs(
         Seq(
           (Level.Info, "Start {}{} and {} end", List(3, 8, "bar"))
-        ))
+        )
+      )
     }
 
     "should log errors" >> {
@@ -33,7 +34,8 @@ class LoggerSpec extends Specification with DefaultRuntime {
       logger.entries must containTheSameElementsAs(
         Seq(
           (Level.Error, "{} plus {}", List(1, 2, e))
-        ))
+        )
+      )
     }
   }
 }
