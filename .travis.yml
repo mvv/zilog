@@ -43,7 +43,7 @@ jobs:
       stage: publish
       name: "Publish"
       before_script: gpg --import project/ci.asc
-      script: sbt +publish sonatypeBundleRelease
+      script: sbt +publish sonatypeBundleReleaseIfNotSnapshot
 
 env:
   global:

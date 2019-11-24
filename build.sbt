@@ -22,6 +22,17 @@ inThisBuild(
 ThisBuild / publishTo := sonatypePublishToBundle.value
 ThisBuild / publishMavenStyle := true
 
+lazy val sonatypeBundleReleaseIfNotSnapshot =
+  taskKey[String]("Release a bundle to Sonatype (if not SNAPSHOT)")
+
+ThisBuild / sonatypeBundleReleaseIfNotSnapshot := Def.taskDyn {
+  if (isSnapshot.value) {
+    Def.task { "SNAPSHOT" }
+  } else {
+    Def.task { (sonatypeBundleRelease in publish).value }
+  }
+}.value
+
 inThisBuild(
   Seq(
     crossScalaVersions := Seq("2.13.1", "2.12.10", "2.11.12"),
