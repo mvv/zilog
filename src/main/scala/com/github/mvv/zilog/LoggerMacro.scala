@@ -88,7 +88,7 @@ class LoggerMacro(val c: blackbox.Context) {
           val $ctx = implicitly[_root_.com.github.mvv.zilog.LoggerContext]
           if ($ctx.isLevelEnabled($level)) {
             ${c.prefix}.log($level, $format, ${if (argsWithError.isEmpty) {
-      q"_root_.scala.collection.immutable.Nil"
+      q"_root_.com.github.mvv.zilog.Logger.NoArgs"
     } else {
       q"_root_.scala.Array[_root_.scala.Any](..$argsWithError)"
     }})

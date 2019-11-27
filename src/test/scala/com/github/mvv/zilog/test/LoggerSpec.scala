@@ -22,6 +22,21 @@ class LoggerSpec extends Specification with DefaultRuntime {
       )
     }
 
+    "should log messages without arguments" >> {
+      val logger = new TestLogger(Level.Debug)
+      unsafeRunSync {
+        implicit val ctx = new LoggerContext(logger)
+        ZIO.provide(Logger.Default) {
+          zilog.warn("Message")
+        }
+      }
+      logger.entries must containTheSameElementsAs(
+        Seq(
+          (Level.Warn, "Message", Nil)
+        )
+      )
+    }
+
     "should log errors" >> {
       val e = new RuntimeException
       val logger = new TestLogger(Level.Debug)

@@ -31,4 +31,6 @@ object Logger {
         ZIO.effectTotal(ctx.log(level, format, args))
     }
   }
+
+  val NoArgs: Array[Any] = Array.empty[Any]
 }
