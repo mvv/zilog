@@ -3,22 +3,18 @@ package com.github.mvv.zilog.test
 import com.github.mvv.zilog
 import com.github.mvv.zilog.{Level, Logger, LoggerContext}
 import org.specs2.mutable.Specification
-import zio.{DefaultRuntime, ZIO}
+import zio.BootstrapRuntime
 
-class LoggerSpec extends Specification with DefaultRuntime {
+class LoggerSpec extends Specification with BootstrapRuntime {
   "Logger" >> {
     "should log" >> {
       val logger = new TestLogger(Level.Debug)
       unsafeRunSync {
         implicit val ctx = new LoggerContext(logger)
-        ZIO.provide(Logger.Default) {
-          zilog.info(s"Start ${1 + 2}${8} and ${"bar"} end")
-        }
+        zilog.info(s"Start ${1 + 2}${8} and ${"bar"} end").provideCustomLayer(Logger.live)
       }
-      logger.entries must containTheSameElementsAs(
-        Seq(
-          (Level.Info, "Start {}{} and {} end", List(3, 8, "bar"))
-        )
+      logger.entries.toList mustEqual List(
+        (Level.Info, "Start {}{} and {} end", List(3, 8, "bar"))
       )
     }
 
@@ -26,14 +22,10 @@ class LoggerSpec extends Specification with DefaultRuntime {
       val logger = new TestLogger(Level.Debug)
       unsafeRunSync {
         implicit val ctx = new LoggerContext(logger)
-        ZIO.provide(Logger.Default) {
-          zilog.warn("Message")
-        }
+        zilog.warn("Message").provideCustomLayer(Logger.live)
       }
-      logger.entries must containTheSameElementsAs(
-        Seq(
-          (Level.Warn, "Message", Nil)
-        )
+      logger.entries.toList mustEqual List(
+        (Level.Warn, "Message", Nil)
       )
     }
 
@@ -42,14 +34,10 @@ class LoggerSpec extends Specification with DefaultRuntime {
       val logger = new TestLogger(Level.Debug)
       unsafeRunSync {
         implicit val ctx = new LoggerContext(logger)
-        ZIO.provide(Logger.Default) {
-          zilog.error(e, s"${1} plus ${2}")
-        }
+        zilog.error(e, s"${1} plus ${2}").provideCustomLayer(Logger.live)
       }
-      logger.entries must containTheSameElementsAs(
-        Seq(
-          (Level.Error, "{} plus {}", List(1, 2, e))
-        )
+      logger.entries.toList mustEqual List(
+        (Level.Error, "{} plus {}", List(1, 2, e))
       )
     }
   }

@@ -5,7 +5,7 @@ import xerial.sbt.Sonatype._
 inThisBuild(
   Seq(
     organization := "com.github.mvv.zilog",
-    version := "0.1-M2",
+    version := "0.1-M3",
     homepage := Some(url("https://github.com/mvv/zilog")),
     scmInfo := Some(ScmInfo(url("https://github.com/mvv/zilog"), "scm:git@github.com:mvv/zilog.git")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
@@ -62,7 +62,7 @@ lazy val zilog = (project in file("."))
     },
     libraryDependencies ++=
       Seq(
-        "dev.zio" %% "zio" % "1.0.0-RC16" % Provided,
+        "dev.zio" %% "zio" % "1.0.0-RC18-2" % Provided,
         "org.slf4j" % "slf4j-api" % "1.7.29",
         "org.scala-lang" % "scala-reflect" % scalaVersion.value,
         "org.specs2" %% "specs2-core" % "4.8.1" % Test
