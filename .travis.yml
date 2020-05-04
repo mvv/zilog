@@ -1,7 +1,7 @@
 language: scala
 
 scala:
-  - 2.13.1
+  - 2.13.2
 
 jdk:
   - openjdk8
@@ -34,10 +34,7 @@ jobs:
       before_script: gpg --import project/ci.asc
       script: sbt ++$TRAVIS_SCALA_VERSION test package packageSrc publishLocal
     - <<: *test
-      scala: 2.11.12
-      name: "Build and test for Scala 2.11"
-    - <<: *test
-      scala: 2.12.10
+      scala: 2.12.11
       name: "Build and test for Scala 2.12"
     - &publish
       stage: publish
