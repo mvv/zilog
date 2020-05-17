@@ -10,7 +10,7 @@ Structured logging library for [ZIO](https://zio.dev)
 Add Zilog to your dependencies
 
 ```scala
-libraryDependencies += "com.github.mvv.zilog" %% "zilog" % "0.1-M4"
+libraryDependencies += "com.github.mvv.zilog" %% "zilog" % "0.1-M5"
 ```
 
 If you plan to use custom compound structured arguments (like in the example
@@ -18,7 +18,7 @@ below), you might want to also add `sredded-generic` dependency for the
 `deriveStructured` macro:
 
 ```scala
-libraryDependencies += "com.github.mvv.sredded" %% "sredded-generic" % "0.1-M1" % Provided
+libraryDependencies += "com.github.mvv.sredded" %% "sredded-generic" % "0.1-M2" % Provided
 ```
 
 Running the following example program
@@ -77,4 +77,5 @@ should produce something like (as a single line)
 
 ## Submodules
 
+* `zilog-sager` allows you to access `Logging` instances in [Sager](https://github.com/mvv/sager) environments
 * `zilog-over-slf4j` provides a `Logging` service that uses SLF4J as a backend

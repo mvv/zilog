@@ -5,7 +5,7 @@ import xerial.sbt.Sonatype._
 inThisBuild(
   Seq(
     organization := "com.github.mvv.zilog",
-    version := "0.1-M4",
+    version := "0.1-M5", // next is M6
     homepage := Some(url("https://github.com/mvv/zilog")),
     scmInfo := Some(ScmInfo(url("https://github.com/mvv/zilog"), "scm:git@github.com:mvv/zilog.git")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
@@ -47,7 +47,27 @@ def isPriorTo2_13(version: String): Boolean =
     case _                => false
   }
 
-val zioVersion = "1.0.0-RC18-2"
+lazy val macroSettings: Seq[Def.SettingsDefinition] =
+  Seq(
+    scalacOptions ++= {
+      if (isPriorTo2_13(scalaVersion.value)) {
+        Nil
+      } else {
+        Seq("-Ymacro-annotations")
+      }
+    },
+    libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided,
+    libraryDependencies ++= {
+      if (isPriorTo2_13(scalaVersion.value)) {
+        Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full))
+      } else {
+        Nil
+      }
+    }
+  )
+
+val zioVersion = "1.0.0-RC19"
+val zio = "dev.zio" %% "zio" % zioVersion
 
 lazy val zilog = (project in file("."))
   .settings(
@@ -57,41 +77,37 @@ lazy val zilog = (project in file("."))
     sonatypeSessionName := s"Zilog_${version.value}",
     commands += sonatypeBundleReleaseIfNotSnapshot
   )
-  .aggregate(core, overSlf4j)
+  .aggregate(core, sager, overSlf4j)
 
 lazy val core = (project in file("core"))
   .settings(
     name := "zilog",
     description := "Structured logging library for ZIO",
-    scalacOptions ++= {
-      if (isPriorTo2_13(scalaVersion.value)) {
-        Nil
-      } else {
-        Seq("-Ymacro-annotations")
-      }
-    },
     libraryDependencies ++=
       Seq(
-        "dev.zio" %% "zio" % zioVersion % Provided,
-        "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided,
-        "com.github.mvv.sredded" %% "sredded-json" % "0.1-M1",
+        zio % Provided,
+        "com.github.mvv.sredded" %% "sredded-json" % "0.1-M2",
         "dev.zio" %% "zio-test" % zioVersion % Test,
         "dev.zio" %% "zio-test-sbt" % zioVersion % Test
       ),
-    libraryDependencies ++= {
-      if (isPriorTo2_13(scalaVersion.value)) {
-        Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full))
-      } else {
-        Nil
-      }
-    },
     testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
   )
+  .settings(macroSettings: _*)
+
+lazy val sager = (project in file("sager"))
+  .settings(
+    name := "zilog-sager",
+    description := "Using generic records to carry logging service in environment",
+    libraryDependencies ++=
+      Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M2")
+  )
+  .settings(macroSettings: _*)
+  .dependsOn(core)
 
 lazy val overSlf4j = (project in file("over-slf4j"))
   .settings(
     name := "zilog-over-sfl4j",
     description := "SLF4J backend for Zilog",
-    libraryDependencies ++= Seq("dev.zio" %% "zio" % zioVersion % Provided, "org.slf4j" % "slf4j-api" % "1.7.30")
+    libraryDependencies ++= Seq(zio % Provided, "org.slf4j" % "slf4j-api" % "1.7.30")
   )
   .dependsOn(core)

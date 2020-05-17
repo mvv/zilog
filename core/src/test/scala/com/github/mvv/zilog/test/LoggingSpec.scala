@@ -174,12 +174,18 @@ object LoggingSpec extends DefaultRunnableSpec {
   private def elems[A](assertions: Assertion[A]*): Assertion[Seq[A]] = {
     lazy val result: Assertion[Seq[A]] = assertionDirect[Seq[A]]("elems")(assertions.map(Render.param): _*) { seq =>
       if (seq.size == assertions.size) {
-        assertions.zip(seq).foldLeft(BoolAlgebraM.success(AssertionValue(result, seq))) {
-          case (acc, (assertion, elem)) =>
-            acc && assertion.run(elem)
-        }
+        assertions
+          .zip(seq)
+          .map {
+            case (assertion, elem) =>
+              assertion.run(elem)
+          }
+          .reduceLeftOption(_ && _)
+          .getOrElse {
+            AssertionData(result, seq).asSuccess
+          }
       } else {
-        BoolAlgebraM.failure(AssertionValue(result, seq))
+        AssertionData(result, seq).asFailure
       }
     }
     result

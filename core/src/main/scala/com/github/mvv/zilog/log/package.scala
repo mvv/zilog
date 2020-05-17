@@ -1,85 +1,85 @@
 package com.github.mvv.zilog
 
-import com.github.mvv.zilog.impl.LoggingMacros
+import com.github.mvv.zilog.impl.EnvLoggingMacros
 import zio.{Cause, Has, URIO, ZIO, ZTrace}
 
 import scala.language.experimental.macros
 
 package object log {
-  final def fatal(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro LoggingMacros.envLogFatal
-  final def fatal(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogFatalWithThrowable
-  final def fatal(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogFatalWithCause
-  final def fatal(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogFatalWithTrace
-  final def fatal(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogFatalWithErrorTrace
-  final def error(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro LoggingMacros.envLogError
-  final def error(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogErrorWithThrowable
-  final def error(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogErrorWithCause
-  final def error(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogErrorWithTrace
-  final def error(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogErrorWithErrorTrace
-  final def warn(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro LoggingMacros.envLogWarn
-  final def warn(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogWarnWithThrowable
-  final def warn(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogWarnWithCause
-  final def warn(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogWarnWithTrace
-  final def warn(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogWarnWithErrorTrace
-  final def info(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro LoggingMacros.envLogInfo
-  final def info(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogInfoWithThrowable
-  final def info(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogInfoWithCause
-  final def info(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogInfoWithTrace
-  final def info(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogInfoWithErrorTrace
-  final def debug(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro LoggingMacros.envLogDebug
-  final def debug(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogDebugWithThrowable
-  final def debug(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogDebugWithCause
-  final def debug(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogDebugWithTrace
-  final def debug(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogDebugWithErrorTrace
-  final def trace(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro LoggingMacros.envLogTrace
-  final def trace(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogTraceWithThrowable
-  final def trace(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogTraceWithCause
-  final def trace(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogTraceWithTrace
-  final def trace(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
-    macro LoggingMacros.envLogTraceWithErrorTrace
+  def fatal(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro EnvLoggingMacros.fatal
+  def fatal(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.fatalWithThrowable
+  def fatal(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.fatalWithCause
+  def fatal(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.fatalWithTrace
+  def fatal(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.fatalWithErrorTrace
+  def error(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro EnvLoggingMacros.error
+  def error(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.errorWithThrowable
+  def error(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.errorWithCause
+  def error(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.errorWithTrace
+  def error(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.errorWithErrorTrace
+  def warn(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro EnvLoggingMacros.warn
+  def warn(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.warnWithThrowable
+  def warn(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.warnWithCause
+  def warn(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.warnWithTrace
+  def warn(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.warnWithErrorTrace
+  def info(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro EnvLoggingMacros.info
+  def info(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.infoWithThrowable
+  def info(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.infoWithCause
+  def info(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.infoWithTrace
+  def info(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.infoWithErrorTrace
+  def debug(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro EnvLoggingMacros.debug
+  def debug(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.debugWithThrowable
+  def debug(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.debugWithCause
+  def debug(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.debugWithTrace
+  def debug(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.debugWithErrorTrace
+  def trace(message: String, args: Logging.Args*): URIO[Logging, Unit] = macro EnvLoggingMacros.trace
+  def trace(error: Throwable, message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.traceWithThrowable
+  def trace(cause: Cause[Any], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.traceWithCause
+  def trace(trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.traceWithTrace
+  def trace(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): URIO[Logging, Unit] =
+    macro EnvLoggingMacros.traceWithErrorTrace
 
-  def mapLogMessage[R <: Has[_] with Logging, E, A](
+  def mapLogMessage[R <: Logging, E, A](
       f: String => String
   )(zio: => ZIO[R, E, A]): ZIO[R, E, A] =
     zio.provideSomeLayer[R](Logging.mapMessage(f))
-  def withLogPrefix[R <: Has[_] with Logging, E, A](
+  def withLogPrefix[R <: Logging, E, A](
       prefix: String
   )(zio: => ZIO[R, E, A]): ZIO[R, E, A] =
     mapLogMessage(message => s"$prefix$message")(zio)
-  def mapLogArgs[R <: Has[_] with Logging, E, A](
+  def mapLogArgs[R <: Logging, E, A](
       f: Logging.Args => Logging.Args
   )(zio: => ZIO[R, E, A]): ZIO[R, E, A] =
     zio.provideSomeLayer[R](Logging.mapArgs(f))
-  def withLogArgs[R <: Has[_] with Logging, E, A](
+  def withLogArgs[R <: Logging, E, A](
       args: Logging.Args*
   )(zio: => ZIO[R, E, A]): ZIO[R, E, A] = {
     val combined = args.foldLeft(Logging.NoArgs)(_ ++ _)
     mapLogArgs(combined ++ _)(zio)
   }
-  def withMinLogLevel[R <: Has[_] with Logging, E, A](
+  def withMinLogLevel[R <: Logging, E, A](
       minLevel: Logging.Level
   )(zio: => ZIO[R, E, A]): ZIO[R, E, A] =
     zio.provideSomeLayer[R](Logging.withMinLevel(minLevel))

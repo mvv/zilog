@@ -2,10 +2,10 @@ package com.github.mvv.zilog
 
 import com.github.mvv.sredded.{StructValue, Structured}
 import com.github.mvv.zilog.impl.{
-  LoggingMacros,
   MapArgsLoggingService,
   MapMessageLoggingService,
   NopLoggingService,
+  PrefixLoggingMacros,
   StructuredLoggingService,
   TextLoggingService,
   WithMinLevelLoggingService
@@ -164,60 +164,60 @@ object Logging {
             sourceClass: String,
             sourceMethod: String,
             sourceLine: Int): UIO[Unit]
-    final def fatal(message: String, args: Logging.Args*): UIO[Unit] = macro LoggingMacros.prefixLogFatal
+    final def fatal(message: String, args: Logging.Args*): UIO[Unit] = macro PrefixLoggingMacros.fatal
     final def fatal(error: Throwable, message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogFatalWithThrowable
+      macro PrefixLoggingMacros.fatalWithThrowable
     final def fatal(cause: Cause[Any], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogFatalWithCause
+      macro PrefixLoggingMacros.fatalWithCause
     final def fatal(trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogFatalWithTrace
+      macro PrefixLoggingMacros.fatalWithTrace
     final def fatal(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogFatalWithErrorTrace
-    final def error(message: String, args: Logging.Args*): UIO[Unit] = macro LoggingMacros.prefixLogError
+      macro PrefixLoggingMacros.fatalWithErrorTrace
+    final def error(message: String, args: Logging.Args*): UIO[Unit] = macro PrefixLoggingMacros.error
     final def error(error: Throwable, message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogErrorWithThrowable
+      macro PrefixLoggingMacros.errorWithThrowable
     final def error(cause: Cause[Any], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogErrorWithCause
+      macro PrefixLoggingMacros.errorWithCause
     final def error(trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogErrorWithTrace
+      macro PrefixLoggingMacros.errorWithTrace
     final def error(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogErrorWithErrorTrace
-    final def warn(message: String, args: Logging.Args*): UIO[Unit] = macro LoggingMacros.prefixLogWarn
+      macro PrefixLoggingMacros.errorWithErrorTrace
+    final def warn(message: String, args: Logging.Args*): UIO[Unit] = macro PrefixLoggingMacros.warn
     final def warn(error: Throwable, message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogWarnWithThrowable
+      macro PrefixLoggingMacros.warnWithThrowable
     final def warn(cause: Cause[Any], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogWarnWithCause
+      macro PrefixLoggingMacros.warnWithCause
     final def warn(trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogWarnWithTrace
+      macro PrefixLoggingMacros.warnWithTrace
     final def warn(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogWarnWithErrorTrace
-    final def info(message: String, args: Logging.Args*): UIO[Unit] = macro LoggingMacros.prefixLogInfo
+      macro PrefixLoggingMacros.warnWithErrorTrace
+    final def info(message: String, args: Logging.Args*): UIO[Unit] = macro PrefixLoggingMacros.info
     final def info(error: Throwable, message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogInfoWithThrowable
+      macro PrefixLoggingMacros.infoWithThrowable
     final def info(cause: Cause[Any], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogInfoWithCause
+      macro PrefixLoggingMacros.infoWithCause
     final def info(trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogInfoWithTrace
+      macro PrefixLoggingMacros.infoWithTrace
     final def info(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogInfoWithErrorTrace
-    final def debug(message: String, args: Logging.Args*): UIO[Unit] = macro LoggingMacros.prefixLogDebug
+      macro PrefixLoggingMacros.infoWithErrorTrace
+    final def debug(message: String, args: Logging.Args*): UIO[Unit] = macro PrefixLoggingMacros.debug
     final def debug(error: Throwable, message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogDebugWithThrowable
+      macro PrefixLoggingMacros.debugWithThrowable
     final def debug(cause: Cause[Any], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogDebugWithCause
+      macro PrefixLoggingMacros.debugWithCause
     final def debug(trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogDebugWithTrace
+      macro PrefixLoggingMacros.debugWithTrace
     final def debug(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogDebugWithErrorTrace
-    final def trace(message: String, args: Logging.Args*): UIO[Unit] = macro LoggingMacros.prefixLogTrace
+      macro PrefixLoggingMacros.debugWithErrorTrace
+    final def trace(message: String, args: Logging.Args*): UIO[Unit] = macro PrefixLoggingMacros.trace
     final def trace(error: Throwable, message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogTraceWithThrowable
+      macro PrefixLoggingMacros.traceWithThrowable
     final def trace(cause: Cause[Any], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogTraceWithCause
+      macro PrefixLoggingMacros.traceWithCause
     final def trace(trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogTraceWithTrace
+      macro PrefixLoggingMacros.traceWithTrace
     final def trace(error: Any, trace: Option[ZTrace], message: String, args: Logging.Args*): UIO[Unit] =
-      macro LoggingMacros.prefixLogTraceWithErrorTrace
+      macro PrefixLoggingMacros.traceWithErrorTrace
   }
 
   object Service {
