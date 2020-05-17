@@ -5,6 +5,7 @@ import zio.{Cause, ZTrace}
 
 import scala.annotation.tailrec
 import scala.reflect.macros.blackbox
+import scala.language.higherKinds
 
 trait LoggingMacros {
   val c: blackbox.Context
