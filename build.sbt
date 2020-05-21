@@ -104,7 +104,7 @@ lazy val sager = (project in file("sager"))
     name := "zilog-sager",
     description := "Using generic records to carry logging service in environment",
     libraryDependencies ++=
-      Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M2")
+      Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M3")
   )
   .settings(macroSettings: _*)
   .settings(zioTestSettings: _*)

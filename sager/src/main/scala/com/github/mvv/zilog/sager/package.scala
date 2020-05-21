@@ -10,7 +10,7 @@ import zio.{UIO, ULayer, URLayer, ZLayer}
 
 package object sager {
   type Logging = Haz[zilog.Logging.Service]
-  type LoggingEnv[A <: zilog.Logging.Service] = Env[zilog.Logging.Service, A]
+  type LoggingEnv[+A <: zilog.Logging.Service] = Env[zilog.Logging.Service, A]
   val Logging: zilog.Logging.type = zilog.Logging
   type Logger = zilog.Logger
   val Logger: zilog.Logger.type = zilog.Logger
