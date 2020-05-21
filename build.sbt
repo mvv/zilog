@@ -66,8 +66,15 @@ lazy val macroSettings: Seq[Def.SettingsDefinition] =
     }
   )
 
-val zioVersion = "1.0.0-RC19"
+val zioVersion = "1.0.0-RC19-2"
 val zio = "dev.zio" %% "zio" % zioVersion
+
+lazy val zioTestSettings: Seq[Def.SettingsDefinition] =
+  Seq(
+    libraryDependencies ++= Seq("dev.zio" %% "zio-test" % zioVersion % Test,
+                                "dev.zio" %% "zio-test-sbt" % zioVersion % Test),
+    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
+  )
 
 lazy val zilog = (project in file("."))
   .settings(
@@ -86,13 +93,11 @@ lazy val core = (project in file("core"))
     libraryDependencies ++=
       Seq(
         zio % Provided,
-        "com.github.mvv.sredded" %% "sredded-json" % "0.1-M2",
-        "dev.zio" %% "zio-test" % zioVersion % Test,
-        "dev.zio" %% "zio-test-sbt" % zioVersion % Test
-      ),
-    testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
+        "com.github.mvv.sredded" %% "sredded-json" % "0.1-M2"
+      )
   )
   .settings(macroSettings: _*)
+  .settings(zioTestSettings: _*)
 
 lazy val sager = (project in file("sager"))
   .settings(
@@ -102,6 +107,7 @@ lazy val sager = (project in file("sager"))
       Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M2")
   )
   .settings(macroSettings: _*)
+  .settings(zioTestSettings: _*)
   .dependsOn(core)
 
 lazy val overSlf4j = (project in file("over-slf4j"))
