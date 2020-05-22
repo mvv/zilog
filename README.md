@@ -10,7 +10,7 @@ Structured logging library for [ZIO](https://zio.dev)
 Add Zilog to your dependencies
 
 ```scala
-libraryDependencies += "com.github.mvv.zilog" %% "zilog" % "0.1-M9"
+libraryDependencies += "com.github.mvv.zilog" %% "zilog" % "0.1-M10"
 ```
 
 If you plan to use custom compound structured arguments (like in the example
