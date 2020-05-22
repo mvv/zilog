@@ -27,6 +27,7 @@ object Logger {
 
   def apply(name: String): Logger = new Logger(name)
   def apply[A: ClassTag]: Logger = new Logger(classTag[A].runtimeClass.getTypeName)
+  def apply(clazz: Class[_]): Logger = new Logger(clazz.getTypeName)
 
   final class Key[A]
   def key[A]: Key[A] = new Key[A]
