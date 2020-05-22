@@ -5,7 +5,7 @@ import xerial.sbt.Sonatype._
 inThisBuild(
   Seq(
     organization := "com.github.mvv.zilog",
-    version := "0.1-M8", // next is M9
+    version := "0.1-M9", // next is M10
     homepage := Some(url("https://github.com/mvv/zilog")),
     scmInfo := Some(ScmInfo(url("https://github.com/mvv/zilog"), "scm:git@github.com:mvv/zilog.git")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
@@ -112,7 +112,7 @@ lazy val sager = (project in file("sager"))
 
 lazy val overSlf4j = (project in file("over-slf4j"))
   .settings(
-    name := "zilog-over-sfl4j",
+    name := "zilog-over-slf4j",
     description := "SLF4J backend for Zilog",
     libraryDependencies ++= Seq(zio % Provided, "org.slf4j" % "slf4j-api" % "1.7.30")
   )
