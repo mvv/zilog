@@ -181,18 +181,18 @@ trait LoggingMacros {
       case StackTraceExpr.FromCause(cause) =>
         q"_root_.com.github.mvv.zilog.Logging.CauseStackTrace($cause)"
     }
+    val resolved = TermName(c.freshName("resolved"))
     val logger = TermName(c.freshName("logger"))
     val (sourceClass, sourceMethod) = classAndMethodName(c.internal.enclosingOwner)
     q"""
-       $service.resolveLogger($level).flatMap {
-         case _root_.scala.None =>
-           _root_.zio.ZIO.unit
-         case _root_.scala.Some($logger) =>
-           $service.log(($logger: $service.ResolvedLogger), $level, $message, $combinedArgs, $translatedStackTrace,
+       $service.resolveLogger($level).flatMap { ($resolved: Option[$service.ResolvedLogger]) =>
+         $resolved.fold(_root_.zio.ZIO.unit) { ($logger: $service.ResolvedLogger) =>
+           $service.log($logger, $level, $message, $combinedArgs, $translatedStackTrace,
                         ${c.enclosingPosition.source.file.name},
                         $sourceClass,
                         $sourceMethod,
                         ${c.enclosingPosition.line})
+         }
        }
      """
   }

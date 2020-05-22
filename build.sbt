@@ -5,7 +5,7 @@ import xerial.sbt.Sonatype._
 inThisBuild(
   Seq(
     organization := "com.github.mvv.zilog",
-    version := "0.1-M10", // next is M11
+    version := "0.1-M11", // next is M12
     homepage := Some(url("https://github.com/mvv/zilog")),
     scmInfo := Some(ScmInfo(url("https://github.com/mvv/zilog"), "scm:git@github.com:mvv/zilog.git")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
@@ -104,7 +104,7 @@ lazy val sager = (project in file("sager"))
     name := "zilog-sager",
     description := "Using generic records to carry logging service in environment",
     libraryDependencies ++=
-      Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M3")
+      Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M4")
   )
   .settings(macroSettings: _*)
   .settings(zioTestSettings: _*)
