@@ -19,7 +19,7 @@ class EnvLoggingMacros(val c: blackbox.Context) extends LoggingMacros {
        _root_.zio.ZIO.accessM[_root_.com.github.mvv.zilog.Logging] {
          ($logging: _root_.com.github.mvv.zilog.Logging) =>
            val $service = $logging.get
-           ${log(q"$service", level, stackTrace, message, args)}
+           ${log(service, level, stackTrace, message, args)}
        }
      """
   }

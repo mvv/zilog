@@ -125,7 +125,7 @@ trait LoggingMacros {
 
   private val throwableType: c.Type = c.typeOf[Throwable]
 
-  final protected def log(service: Tree,
+  final protected def log(service: TermName,
                           level: c.Expr[Logging.Level],
                           stackTrace: StackTraceExpr[c.Expr],
                           message: c.Expr[String],
@@ -188,7 +188,7 @@ trait LoggingMacros {
          case _root_.scala.None =>
            _root_.zio.ZIO.unit
          case _root_.scala.Some($logger) =>
-           $service.log($logger, $level, $message, $combinedArgs, $translatedStackTrace,
+           $service.log(($logger: $service.ResolvedLogger), $level, $message, $combinedArgs, $translatedStackTrace,
                         ${c.enclosingPosition.source.file.name},
                         $sourceClass,
                         $sourceMethod,

@@ -14,6 +14,13 @@ class PrefixLoggingMacros(val c: blackbox.Context) extends LoggingMacros {
   override protected def log(level: c.Expr[Logging.Level],
                              stackTrace: StackTraceExpr[c.Expr],
                              message: c.Expr[String],
-                             args: Seq[c.Expr[Logging.Args]]): Tree =
-    log(c.prefix.tree, level, stackTrace, message, args)
+                             args: Seq[c.Expr[Logging.Args]]): Tree = {
+    val service = TermName(c.freshName("service"))
+    q"""
+       {
+         val $service = ${c.prefix}
+         ${log(service, level, stackTrace, message, args)}
+       }
+     """
+  }
 }

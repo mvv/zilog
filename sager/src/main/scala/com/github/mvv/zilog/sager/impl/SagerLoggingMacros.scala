@@ -19,7 +19,7 @@ class SagerLoggingMacros(val c: blackbox.Context) extends LoggingMacros {
        _root_.zio.ZIO.accessM[_root_.com.github.mvv.zilog.sager.Logging] {
          ($logging: _root_.com.github.mvv.zilog.sager.Logging) =>
            val $service = $logging.value
-           ${log(q"$service", level, stackTrace, message, args)}
+           ${log(service, level, stackTrace, message, args)}
        }
      """
   }
