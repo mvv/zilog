@@ -1,7 +1,6 @@
 package com.github.mvv.zilog.test
 
 import com.github.mvv.zilog.{Logger, Logging}
-import zio.UIO
 import zio.test._
 import zio.test.environment.TestEnvironment
 import zio.test.Assertion.isUnit
