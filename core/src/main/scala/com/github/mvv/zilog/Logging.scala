@@ -237,14 +237,14 @@ object Logging {
     ZLayer.fromService[Clock.Service, Service](Service.text(_)(f))
   val consoleText: URLayer[Console with Clock, Logging] =
     ZLayer.fromServices[Console.Service, Clock.Service, Service] { (console, clock) =>
-      Service.text(clock)(console.putStrLn)
+      Service.text(clock)(console.putStrLn(_).ignore)
     }
   def structured(layout: StructuredLayout)(f: StructValue.Mapping => UIO[Unit]): URLayer[Clock, Logging] =
     ZLayer.fromService[Clock.Service, Service](Service.structured(_, layout)(f))
   def consoleJson(layout: StructuredLayout = StructuredLayout.Default): URLayer[Console with Clock, Logging] =
     ZLayer.fromServices[Console.Service, Clock.Service, Service] { (console, clock) =>
       import com.github.mvv.sredded.json._
-      Service.structured(clock, layout)(entry => console.putStrLn(entry.asJsonString))
+      Service.structured(clock, layout)(entry => console.putStrLn(entry.asJsonString).ignore)
     }
   def mapMessage(f: String => String): URLayer[Logging, Logging] =
     ZLayer.fromService[Service, Service](Service.withMessage(_)(f))

@@ -22,14 +22,14 @@ package object sager {
       ZLayer.fromServiceHaz[Clock.Service, Logging.Service](Logging.Service.text(_)(f))
     val consoleText: URLayer[Console with Clock, Logging] =
       ZLayer.fromServicesHaz[Console.Service, Clock.Service, Logging.Service] { (console, clock) =>
-        Logging.Service.text(clock)(console.putStrLn)
+        Logging.Service.text(clock)(console.putStrLn(_).ignore)
       }
     def structured(layout: StructuredLayout)(f: StructValue.Mapping => UIO[Unit]): URLayer[Clock, Logging] =
       ZLayer.fromServiceHaz[Clock.Service, Logging.Service](Logging.Service.structured(_, layout)(f))
     def consoleJson(layout: StructuredLayout = StructuredLayout.Default): URLayer[Console with Clock, Logging] =
       ZLayer.fromServicesHaz[Console.Service, Clock.Service, Logging.Service] { (console, clock) =>
         import com.github.mvv.sredded.json._
-        Logging.Service.structured(clock, layout)(entry => console.putStrLn(entry.asJsonString))
+        Logging.Service.structured(clock, layout)(entry => console.putStrLn(entry.asJsonString).ignore)
       }
     def mapMessage(f: String => String): URLayer[Logging, Logging] =
       ZLayer.fromServiceHaz[Logging.Service, Logging.Service](Logging.Service.withMessage(_)(f))

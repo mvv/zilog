@@ -5,7 +5,7 @@ import xerial.sbt.Sonatype._
 inThisBuild(
   Seq(
     organization := "com.github.mvv.zilog",
-    version := "0.1-M12", // next is M13
+    version := "0.1-M13", // next is M14
     homepage := Some(url("https://github.com/mvv/zilog")),
     scmInfo := Some(ScmInfo(url("https://github.com/mvv/zilog"), "scm:git@github.com:mvv/zilog.git")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
@@ -35,7 +35,7 @@ lazy val sonatypeBundleReleaseIfNotSnapshot: Command = Command.command("sonatype
 
 inThisBuild(
   Seq(
-    crossScalaVersions := Seq("2.13.2", "2.12.11"),
+    crossScalaVersions := Seq("2.13.6", "2.12.14"),
     scalaVersion := crossScalaVersions.value.head,
     scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked", "-Xfatal-warnings")
   )
@@ -66,7 +66,7 @@ lazy val macroSettings: Seq[Def.SettingsDefinition] =
     }
   )
 
-val zioVersion = "1.0.0-RC21-2"
+val zioVersion = "1.0.9"
 val zio = "dev.zio" %% "zio" % zioVersion
 
 lazy val zioTestSettings: Seq[Def.SettingsDefinition] =
@@ -104,7 +104,7 @@ lazy val sager = (project in file("sager"))
     name := "zilog-sager",
     description := "Using generic records to carry logging service in environment",
     libraryDependencies ++=
-      Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M5")
+      Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M10")
   )
   .settings(macroSettings: _*)
   .settings(zioTestSettings: _*)
