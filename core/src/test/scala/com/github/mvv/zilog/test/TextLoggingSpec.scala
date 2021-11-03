@@ -14,14 +14,14 @@ object TextLoggingSpec extends DefaultRunnableSpec {
       testM("log") {
         traceLogEntries {
           log.withLogArgs(BarKey(1.23f)) {
-            log.error("Something happended", FooKey(123))
+            log.error("Something happened", FooKey(123))
           }
         }.zip(ZIO.fiberId).map {
           case (entries, fiberId) =>
             assert(entries) {
               equalTo(
                 List(
-                  s"1970-01-01T00:00:00Z [#${fiberId.seqNumber}] ERROR ${logger.name} - Something happended - bar=1.23, foo=123"
+                  s"1970-01-01T00:00:00Z [#${fiberId.seqNumber}] ERROR ${logger.name} - Something happened - bar=1.23, foo=123"
                 )
               )
             }

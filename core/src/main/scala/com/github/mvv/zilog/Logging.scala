@@ -6,6 +6,7 @@ import com.github.mvv.zilog.impl.{
   MapMessageLoggingService,
   NopLoggingService,
   PrefixLoggingMacros,
+  StackTraceUtils,
   StructuredLoggingService,
   TextLoggingService,
   WithMinLevelLoggingService
@@ -140,6 +141,7 @@ object Logging {
     final override def isEmpty: Boolean = false
     final override def nonEmpty: Boolean = true
     def prettyPrint: String
+    def throwable: Throwable = StackTraceUtils.stackTraceError(this)
   }
   final case class ThrowableStackTrace(error: Throwable) extends SomeStackTrace {
     override def prettyPrint: String = Cause.fail(error).prettyPrint
