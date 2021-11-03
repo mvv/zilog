@@ -35,7 +35,7 @@ lazy val sonatypeBundleReleaseIfNotSnapshot: Command = Command.command("sonatype
 
 inThisBuild(
   Seq(
-    crossScalaVersions := Seq("2.13.6", "2.12.14"),
+    crossScalaVersions := Seq("2.13.7", "2.12.15"),
     scalaVersion := crossScalaVersions.value.head,
     scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked", "-Xfatal-warnings")
   )
@@ -66,7 +66,7 @@ lazy val macroSettings: Seq[Def.SettingsDefinition] =
     }
   )
 
-val zioVersion = "1.0.9"
+val zioVersion = "1.0.12"
 val zio = "dev.zio" %% "zio" % zioVersion
 
 lazy val zioTestSettings: Seq[Def.SettingsDefinition] =
@@ -104,7 +104,7 @@ lazy val sager = (project in file("sager"))
     name := "zilog-sager",
     description := "Using generic records to carry logging service in environment",
     libraryDependencies ++=
-      Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M10")
+      Seq(zio % Provided, "com.github.mvv.sager" %% "sager-zio" % "0.1-M12")
   )
   .settings(macroSettings: _*)
   .settings(zioTestSettings: _*)
@@ -114,6 +114,6 @@ lazy val overSlf4j = (project in file("over-slf4j"))
   .settings(
     name := "zilog-over-slf4j",
     description := "SLF4J backend for Zilog",
-    libraryDependencies ++= Seq(zio % Provided, "org.slf4j" % "slf4j-api" % "1.7.30")
+    libraryDependencies ++= Seq(zio % Provided, "org.slf4j" % "slf4j-api" % "1.7.32")
   )
   .dependsOn(core)
